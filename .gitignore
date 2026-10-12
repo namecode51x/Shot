@@ -1,0 +1,10 @@
+dist/stage/
+# Build outputs: ~2000 files / ~600MB of fingerprints, exes and incremental
+# state. They broke every push on slow networks (HTTP 408) and are
+# reproducible with `cargo build`, so they are never tracked.
+target/
+# Extracted copies of a release next to its zip (the zip is the artifact).
+dist/NameShot-*/
+# Accidental junk (was committed once): empty dll placeholder + test scrap.
+/*.dll
+/z

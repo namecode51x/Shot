@@ -76,8 +76,7 @@ see "Hotkey note" below).
 
 ## Running
 
-- **Release package:** `dist\NameShot-0.1.0-win-x64.zip` — extract anywhere and run
-  `nameshot.exe`. No installer, no admin rights, no runtime prerequisites: the exe
+- **Release packages** in `dist/` (built with `scripts\make-release.ps1`): portable `NameShot-<ver>-win-x64.zip` — extract anywhere and run `nameshot.exe`; or `NameShot-<ver>-win-x64-Setup.exe` — installer (per-user `%LocalAppData%`\NameShot, Start Menu entry + uninstaller, no admin rights; building it needs Inno Setup 6). No runtime prerequisites: the exe
   imports only Windows system DLLs and the inbox Universal CRT (checked with
   `objdump -p`) — **no WebView2, no .NET, no VC++ redistributable, nothing bundled**.
   The zip also carries `README.md` and `docs/` (ARCHITECTURE.md, BUILD_LOG.md).
@@ -176,7 +175,7 @@ Concise pass/fail checklist for a clean machine (full evidence of every point:
   in the build log.
 - GDI capture cannot read DRM/protected surfaces or the secure desktop (UAC); those
   regions may appear black.
-- Not code-signed; no installer; SmartScreen may warn on first run elsewhere.
+- Not code-signed; SmartScreen may warn on first run elsewhere (portable zip and Setup.exe alike).
 - Mosaic is pixelation for readability, **not** an anonymity guarantee against
   identification (shape, context, or small-region attacks).
 - The in-overlay editor has no zoom/pan; the whole selection is shown fitted.
@@ -225,4 +224,11 @@ All rights reserved (personal project; no license granted yet).
  #   N a m e S h o t  
  #   N a m e S h o t  
  #   N a m e S h o t  
+ #   N a m e S h o t  
+ #   N a m e S h o t  
+ #   N a m e S h o t  
+ #   N a m e S h o t  
+ #   N a m e S h o t  
+ #   N a m e S h o t  
+ #   S h o t  
  
