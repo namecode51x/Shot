@@ -908,23 +908,39 @@ fn on_key(app: &'static App, hwnd: HWND, vk: u32) {
         VK_ESCAPE => {
             let _ = apply_route(app, Route::Close);
         }
-        VK_F => set_full(app),
+        VK_F => quick_full_screen(app, hwnd),
         VK_R => restart(app, hwnd),
         VK_LEFT..=VK_DOWN => nudge(app, vk),
         _ => {}
     }
 }
 
-fn set_full(app: &'static App) {
-    let target = {
-        let mut b = app.overlay.borrow_mut();
-        let Some(s) = b.as_mut() else { return };
-        s.sel = full_rect(&s.vs);
-        s.drag = None;
-        s.hwnd
+/// Quick capture: the whole screen straight to the clipboard, then close
+/// the session and confirm with a tray balloon. No dialog, no verification.
+fn quick_full_screen(app: &'static App, hwnd: HWND) {
+    let frame = {
+        let b = app.overlay.borrow();
+        let Some(s) = b.as_ref() else { return };
+        s.frame.clone()
     };
-    unsafe {
-        let _ = InvalidateRect(Some(target), None, false);
+    match crate::win::clipboard::copy_image(Some(hwnd), &frame) {
+        Ok(()) => {
+            // The balloon goes up before the session closes so the
+            // confirmation appears immediately instead of after the window
+            // is gone.
+            if let Some(t) = app.tray.borrow().as_ref() {
+                t.balloon(s().state_copied, s().app_name, false);
+            }
+            let _ = apply_route(app, Route::Close);
+        }
+        Err(e) => {
+            // Keep the session open so the user can still edit or retry.
+            crate::win::dialog::warn_box(
+                Some(hwnd),
+                s().state_copy_fail_title,
+                &format!("{}: {}", s().state_copy_fail_title, e),
+            );
+        }
     }
 }
 

@@ -134,7 +134,7 @@ pub static EN: Strings = Strings {
     already_running_msg: "NameShot is already in the notification area. Look for the tray icon.",
 
     capture_hint: "Drag to select - release to edit",
-    capture_hint_keys: "Enter: use   F: full screen   R: restart   Esc: cancel",
+    capture_hint_keys: "Enter: edit selection   F: full screen to clipboard   R: restart   Esc: cancel",
     capture_fail_title: "Capture failed",
     capture_fail_msg: "The desktop could not be captured.\n{DETAIL}",
     capture_empty_msg: "The selection is empty.",
